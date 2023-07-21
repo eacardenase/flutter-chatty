@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:chatty/screens/auth.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const App());
@@ -25,6 +26,9 @@ class App extends StatelessWidget {
             17,
             177,
           ),
+        ),
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
       ),
       home: const AuthScreen(),

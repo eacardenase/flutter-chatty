@@ -115,7 +115,7 @@ class _SignUpFormState extends State<SignUpForm> {
           TextButton(
             onPressed: widget.onSwitchScreen,
             child: const Text(
-              'I already have an account.',
+              'I already have an account',
             ),
           )
         ],

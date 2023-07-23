@@ -20,11 +20,13 @@ class _LoginFormState extends State<LoginForm> {
   void _submit() {
     final isValid = _formKey.currentState!.validate();
 
-    if (isValid) {
-      _formKey.currentState!.save();
-
-      print({_enteredEmail, _enteredPassword});
+    if (!isValid) {
+      return;
     }
+
+    _formKey.currentState!.save();
+
+    print({_enteredEmail, _enteredPassword});
   }
 
   @override

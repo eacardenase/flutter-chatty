@@ -1,3 +1,4 @@
+import 'package:chatty/widgets/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,6 +61,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const UserImagePicker(),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             autocorrect: false,

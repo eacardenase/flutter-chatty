@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Select an image to use as profile picture.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Select an image to use as profile picture.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select an image to use as profile picture.</string>
 </dict>
 </plist>

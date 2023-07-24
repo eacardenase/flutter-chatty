@@ -17,9 +17,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
 
   void _switchScreen() {
-    setState(() {
-      _isLogin = !_isLogin;
-    });
+    setState(() => _isLogin = !_isLogin);
   }
 
   @override

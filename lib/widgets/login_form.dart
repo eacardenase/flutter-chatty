@@ -20,6 +20,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _isLoading = false;
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
@@ -31,6 +32,8 @@ class _LoginFormState extends State<LoginForm> {
     _formKey.currentState!.save();
 
     try {
+      setState(() => _isLoading = true);
+
       final userCredential = await _firebase.signInWithEmailAndPassword(
         email: _enteredEmail,
         password: _enteredPassword,
@@ -50,6 +53,8 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       );
+
+      setState(() => _isLoading = false);
     }
   }
 
@@ -103,21 +108,24 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(
             height: 12,
           ),
-          ElevatedButton(
-            onPressed: _submit,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          if (_isLoading) const CircularProgressIndicator(),
+          if (!_isLoading)
+            ElevatedButton(
+              onPressed: _submit,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: const Text(
+                "Login",
+              ),
             ),
-            child: const Text(
-              "Login",
-            ),
-          ),
-          TextButton(
-            onPressed: widget.onSwitchScreen,
-            child: const Text(
-              'Create an account',
-            ),
-          )
+          if (!_isLoading)
+            TextButton(
+              onPressed: widget.onSwitchScreen,
+              child: const Text(
+                'Create an account',
+              ),
+            )
         ],
       ),
     );

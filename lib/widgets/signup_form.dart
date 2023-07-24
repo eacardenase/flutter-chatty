@@ -1,7 +1,10 @@
-import 'package:chatty/widgets/user_image_picker.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:chatty/widgets/user_image_picker.dart';
+import 'package:flutter/material.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -21,11 +24,14 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
   var _enteredPassword = '';
+  File? _selectedImage;
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid || _selectedImage == null) {
+      // show error message
+
       return;
     }
 
@@ -37,7 +43,16 @@ class _SignUpFormState extends State<SignUpForm> {
         password: _enteredPassword,
       );
 
-      print(userCredentials);
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('${userCredentials.user!.uid}.jpg');
+
+      await storageRef.putFile(_selectedImage!);
+
+      final imageUrl = await storageRef.getDownloadURL();
+
+      print(imageUrl);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // Handle error...
@@ -54,6 +69,10 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
+  void _onPickImage(File image) {
+    _selectedImage = image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -61,7 +80,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const UserImagePicker(),
+          UserImagePicker(onPickImage: _onPickImage),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             autocorrect: false,

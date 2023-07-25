@@ -24,7 +24,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
-  var _enteredUsername = '';
+  var _enteredUserName = '';
   var _enteredPassword = '';
   var _isLoading = false;
   File? _selectedImage;
@@ -61,7 +61,7 @@ class _SignUpFormState extends State<SignUpForm> {
           .collection('users')
           .doc(userCredentials.user!.uid)
           .set({
-        'userName': _enteredUsername,
+        'userName': _enteredUserName,
         'email': _enteredEmail,
         'imageUrl': imageUrl
       });
@@ -132,7 +132,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
             onSaved: (newValue) {
-              _enteredUsername = newValue!;
+              _enteredUserName = newValue!;
             },
           ),
           TextFormField(

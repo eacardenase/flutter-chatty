@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NewMessage extends StatefulWidget {
   const NewMessage({
     super.key,
@@ -19,16 +22,33 @@ class _NewMessageState extends State<NewMessage> {
     _messageController.dispose();
   }
 
-  void _submitMessage() {
+  void _submitMessage() async {
     final enteredMessage = _messageController.text;
 
     if (enteredMessage.trim().isEmpty) {
       return;
     }
 
-    // send to Firebase
-
+    FocusScope.of(context).unfocus();
     _messageController.clear();
+
+    final user = FirebaseAuth.instance.currentUser!;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    /**
+     * add method create a new object with arbitrary name
+     * opposed to doc method, in which we can set a specific name.
+     */
+    await FirebaseFirestore.instance.collection('chat').add({
+      'text': enteredMessage,
+      'createdAt': Timestamp.now(),
+      'usedId': user.uid,
+      'userName': userData.data()!['userName'],
+      'userImage': userData.data()!['imageUrl']
+    });
   }
 
   @override
@@ -37,7 +57,7 @@ class _NewMessageState extends State<NewMessage> {
       padding: const EdgeInsets.only(
         left: 15,
         right: 1,
-        bottom: 14,
+        bottom: 8,
       ),
       child: Row(
         children: [

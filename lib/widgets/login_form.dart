@@ -34,12 +34,10 @@ class _LoginFormState extends State<LoginForm> {
     try {
       setState(() => _isLoading = true);
 
-      final userCredential = await _firebase.signInWithEmailAndPassword(
+      await _firebase.signInWithEmailAndPassword(
         email: _enteredEmail,
         password: _enteredPassword,
       );
-
-      print(userCredential);
     } on FirebaseAuthException catch (error) {
       if (error.code == 'user-not-found') {
         // ...

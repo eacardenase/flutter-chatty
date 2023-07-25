@@ -24,6 +24,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   var _enteredEmail = '';
+  var _enteredUsername = '';
   var _enteredPassword = '';
   var _isLoading = false;
   File? _selectedImage;
@@ -60,7 +61,7 @@ class _SignUpFormState extends State<SignUpForm> {
           .collection('users')
           .doc(userCredentials.user!.uid)
           .set({
-        'userName': 'ToDo',
+        'userName': _enteredUsername,
         'email': _enteredEmail,
         'imageUrl': imageUrl
       });
@@ -114,6 +115,24 @@ class _SignUpFormState extends State<SignUpForm> {
             },
             onSaved: (newValue) {
               _enteredEmail = newValue!;
+            },
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Username',
+            ),
+            enableSuggestions: false,
+            validator: (value) {
+              if (value == null ||
+                  value.trim().isEmpty ||
+                  value.trim().length < 4) {
+                return "Please enter at least 4 characters";
+              }
+
+              return null;
+            },
+            onSaved: (newValue) {
+              _enteredUsername = newValue!;
             },
           ),
           TextFormField(

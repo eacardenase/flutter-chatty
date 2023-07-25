@@ -1,3 +1,5 @@
+import 'package:chatty/chat_messages.dart';
+import 'package:chatty/new_message.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -27,9 +29,14 @@ class ChatScreen extends StatelessWidget {
           )
         ],
       ),
-      body: const Center(
-        child: Text(
-          'Logged In!',
+      body: const SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ChatMessages(),
+            ),
+            NewMessage(),
+          ],
         ),
       ),
     );

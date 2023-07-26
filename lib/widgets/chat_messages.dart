@@ -1,8 +1,9 @@
-import 'package:chatty/widgets/message_bubble.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:chatty/widgets/message_bubble.dart';
 
 class ChatMessages extends StatelessWidget {
   const ChatMessages({

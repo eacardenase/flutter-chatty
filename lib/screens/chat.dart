@@ -1,9 +1,10 @@
-import 'package:chatty/chat_messages.dart';
-import 'package:chatty/new_message.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:chatty/widgets/new_message.dart';
+import 'package:chatty/widgets/chat_messages.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({
